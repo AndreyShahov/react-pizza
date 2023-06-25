@@ -1,8 +1,10 @@
 @import '../variables.scss';
 
 .categories {
+
   ul {
     display: flex;
+    flex-wrap: wrap;
 
     li {
       background-color: #f9f9f9;
@@ -25,6 +27,15 @@
       &.active {
         background-color: #282828;
         color: #fff;
+      }
+    }
+
+  }
+
+  @media (max-width: 760px) {
+    ul {
+      li {
+        padding: 8px 20px;
       }
     }
   }
