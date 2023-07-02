@@ -8,7 +8,7 @@ export default function Categories({ value, onChangeCategory }) {
     'Вегетарианская',
     'Гриль',
     'Острые',
-    'Закрытые',
+    'Комбо',
   ]
 
   return (
