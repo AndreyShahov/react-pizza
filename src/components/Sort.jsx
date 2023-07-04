@@ -13,7 +13,7 @@ export default function Sort({ value, onChangeSort }) {
 
   const onClickListItem = (i) => {
     onChangeSort(i);
-    // setOpen(false);
+    setOpen(false);
   }
 
   return (
