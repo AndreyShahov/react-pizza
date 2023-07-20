@@ -2,8 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
-import { setCategoryId } from '../reudx/slices/filterSlice';
-
+import { setCategoryId, setCurrentPage } from '../reudx/slices/filterSlice';
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
@@ -13,26 +12,29 @@ import { SearchContext } from '../App';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { categoryId, sort } = useSelector(state => state.filter);
+  const { categoryId, sort, currentPage } = useSelector(state => state.filter);
   const sortType = sort.sortProperty;
 
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [currentPage, setCurrentPage] = React.useState(1);
-
+  
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
   }
 
+  const onChangePage = ( number) => {
+    dispatch(setCurrentPage(number))
+  }
+  
   React.useEffect(() => {
     setIsLoading(true);
-
+    
     const sortBy = sortType.replace('-', '');
     const order = sortType.includes('-') ? 'asc' : 'desc';
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
-
+    
     axios.get(
       `https://649088d71e6aa71680cb6cdd.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`
     )
@@ -48,6 +50,7 @@ const Home = () => {
 
   const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
 
+
   return (
     <>
       <div className="container">
@@ -59,7 +62,7 @@ const Home = () => {
         <div className="content__items">
           {isLoading ? skeletons : pizzas}
         </div>
-        <Pagination onChangePage={number => setCurrentPage(number)} />
+        <Pagination currentPage={currentPage} onChangePage={onChangePage} />
       </div>
     </>
   )
