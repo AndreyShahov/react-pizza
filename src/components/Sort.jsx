@@ -32,7 +32,9 @@ export default function Sort() {
       }
     }
 
-    document.addEventListener('click', handleClickOutside);
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => document.body.removeEventListener('click', handleClickOutside);
   }, []);
 
   return (
