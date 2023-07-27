@@ -7,6 +7,8 @@ import Search from './Search';
 export default function Header() {
   const { items, totalPrice } = useSelector(state => state.cart);
 
+  const totalCount = items.reduce((sum, item) => item.count + sum, 0);
+
   return (
     <div className="header">
       <div className="container">
@@ -22,7 +24,7 @@ export default function Header() {
         <Search />
         <div className="header__cart">
           <Link to="/react-pizza/cart" className="button button--cart">
-            <span>{totalPrice} ₽</span>
+            <span>{totalPrice > 0 ? totalPrice : 0} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -53,7 +55,7 @@ export default function Header() {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{items.reduce((sum, item) => item.count + sum, 0)}</span>
+            <span>{totalCount > 0 ? totalCount : 0}</span>
           </Link>
         </div>
       </div>
